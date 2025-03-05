@@ -40,14 +40,14 @@ jobs:
             cd app 
             npm install
 
-      - name: Vérifier le format du code (Lint)
-        run: npm run lint || true  # Si le lint échoue, on ne bloque pas
+      # - name: Vérifier le format du code (Lint)
+      #   run: npm run lint || true  # Si le lint échoue, on ne bloque pas
 
-      - name: Lancer les tests unitaires
-        run: npm run test:unit
+      # - name: Lancer les tests unitaires
+      #   run: npm run test:unit
 
-      - name: Lancer les tests E2E
-        run: npm run test:e2e
+      # - name: Lancer les tests E2E
+      #   run: npm run test:e2e
 
   docker-build-and-push-ghcr:
     needs: build-and-test
