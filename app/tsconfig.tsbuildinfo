@@ -1,0 +1,1 @@
+{"root":["./src/database.ts","./src/index.ts","./src/routes.ts","./src/models/book.ts","./src/tests/e2e/bookRoutes.e2e.test.ts","./src/tests/unit/bookController.test.ts"],"version":"5.8.2"}

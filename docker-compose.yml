@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongo-db:
+    image: mongo:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "27018:27017"  # Change le port externe pour éviter les conflits
+    networks:
+      - service_network
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--host", "localhost", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+    ulimits:
+      nofile:
+        soft: 64000
+        hard: 64000
+
+  app:
+    build: ./app
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      mongo-db:
+        condition: service_healthy 
+    networks:
+      - service_network
+    ports:
+      - "3000:3000"
+    volumes:
+      - app_data:/app
+
+networks:
+  service_network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local
+  app_data:
+    driver: local

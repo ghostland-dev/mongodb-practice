@@ -1,0 +1,87 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo-db:
+        image: mongo:latest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.mongo_username }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.mongo_password }}
+        ports:
+          - 27018:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Vérifier le format du code (Lint)
+        run: npm run lint || true  # Si le lint échoue, on ne bloque pas
+
+      - name: Lancer les tests unitaires
+        run: npm run test:unit
+
+      - name: Lancer les tests E2E
+        run: npm run test:e2e
+
+  docker-build-and-push-ghcr:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Connexion à GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Construire l'image Docker
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/mongo-express-td:latest ./app
+          docker tag ghcr.io/${{ github.repository }}/mongo-express-td:latest ghcr.io/${{ github.repository }}/mongo-express-td:${{ github.run_number }}
+
+      - name: Pousser l'image sur GitHub Container Registry
+        run: |
+          docker push ghcr.io/${{ github.repository }}/mongo-express-td:latest
+          docker push ghcr.io/${{ github.repository }}/mongo-express-td:${{ github.run_number }}
+
+  # deploy:
+  #   needs: docker-build-and-push-ghcr
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Déployer sur le serveur distant
+  #       uses: appleboy/ssh-action@v0.1.6
+  #       with:
+  #         host: ${{ secrets.SERVER_HOST }}
+  #         username: ${{ secrets.SERVER_USER }}
+  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #         script: |
+  #           docker login ghcr.io -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+  #           docker pull ghcr.io/${{ github.repository }}/my-app:latest
+  #           docker stop my-app || true
+  #           docker rm my-app || true
+  #           docker run -d --name my-app -p 3000:3000 --network=service_network ghcr.io/${{ github.repository }}/my-app:latest
