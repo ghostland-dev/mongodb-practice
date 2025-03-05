@@ -4,28 +4,29 @@
   "description": "API Express avec MongoDB et TypeScript",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "nodemon ./dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "rm -rf ./dist && tsc",
-    "test": "jest",                    
-    "test:unit": "jest tests/unit",    
+    "test": "jest",
+    "test:unit": "jest tests/unit",
     "test:e2e": "jest tests/e2e",
-    "lint": "eslint . --fix"     
-
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.21.2",
     "mongoose": "^7.0.0",
-    "nodeman": "^1.1.2",
-    "supertest": "^7.0.0"
+    "nodemon": "^3.1.9"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/jest": "^29.5.14",
     "@types/node": "^18.15.3",
+    "@types/semver": "^7.5.8",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
+    "supertest": "^7.0.0",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
