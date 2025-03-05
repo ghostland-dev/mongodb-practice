@@ -33,10 +33,12 @@ jobs:
       - name: Installer Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Installer les dépendances
-        run: npm install
+        run: |
+            cd app 
+            npm install
 
       - name: Vérifier le format du code (Lint)
         run: npm run lint || true  # Si le lint échoue, on ne bloque pas
