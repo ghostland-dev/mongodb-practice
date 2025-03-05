@@ -114,23 +114,133 @@ MONGO_INITDB_DATABASE=database_name
    ```sh
    docker-compose up --build
    ```
-2. **Tester l’API** avec `curl` ou Postman :
-   - Obtenir tous les livres :
-     ```sh
-     curl -X GET http://localhost:3000/api/books
-     ```
-   - Ajouter un livre :
-     ```sh
-     curl -X POST http://localhost:3000/api/books \
-       -H "Content-Type: application/json" \
-       -d '{"title":"1984", "author":"George Orwell", "publishedYear":1949}'
-     ```
-   - Supprimer un livre :
-     ```sh
-     curl -X DELETE http://localhost:3000/api/books/{ID}
-     ```
+Voici les commandes `cURL` correspondantes pour les différentes routes de votre API :
+
+### 📚 **Livres (Books)**
+
+#### 1️⃣ **Obtenir tous les livres**
+```sh
+curl -X GET http://localhost:3000/books
+```
+
+#### 2️⃣ **Obtenir un livre par ID**
+```sh
+curl -X GET http://localhost:3000/books/{id}
+```
+Remplacez `{id}` par l'ID du livre recherché.
+
+#### 3️⃣ **Ajouter un livre**
+```sh
+curl -X POST http://localhost:3000/books \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Nom du livre",
+           "isbn": "123456789",
+           "pageCount": 300,
+           "publishedDate": "2023-01-01T00:00:00.000Z",
+           "thumbnailUrl": "https://example.com/image.jpg",
+           "shortDescription": "Description courte",
+           "longDescription": "Description longue",
+           "status": "PUBLISHED",
+           "authors": ["Auteur 1"],
+           "categories": ["Catégorie 1"]
+         }'
+```
+
+#### 4️⃣ **Importer plusieurs livres**
+```sh
+curl -X POST http://localhost:3000/books/import \
+     -H "Content-Type: application/json" \
+     -d '[
+           {
+             "title": "Livre 1",
+             "isbn": "1111111111",
+             "pageCount": 250,
+             "publishedDate": "2023-01-01T00:00:00.000Z",
+             "thumbnailUrl": "https://example.com/image1.jpg",
+             "shortDescription": "Description 1",
+             "longDescription": "Longue description 1",
+             "status": "PUBLISHED",
+             "authors": ["Auteur 1"],
+             "categories": ["Catégorie A"]
+           },
+           {
+             "title": "Livre 2",
+             "isbn": "2222222222",
+             "pageCount": 320,
+             "publishedDate": "2023-02-01T00:00:00.000Z",
+             "thumbnailUrl": "https://example.com/image2.jpg",
+             "shortDescription": "Description 2",
+             "longDescription": "Longue description 2",
+             "status": "PUBLISHED",
+             "authors": ["Auteur 2"],
+             "categories": ["Catégorie B"]
+           }
+         ]'
+```
+
+#### 5️⃣ **Supprimer un livre**
+```sh
+curl -X DELETE http://localhost:3000/books/{id}
+```
+Remplacez `{id}` par l'ID du livre à supprimer.
 
 ---
+
+### 🎬 **Films (Movies)**
+
+#### 1️⃣ **Obtenir tous les films**
+```sh
+curl -X GET http://localhost:3000/movies
+```
+
+#### 2️⃣ **Obtenir un film par ID**
+```sh
+curl -X GET http://localhost:3000/movies/{id}
+```
+Remplacez `{id}` par l'ID du film recherché.
+
+#### 3️⃣ **Ajouter un film**
+```sh
+curl -X POST http://localhost:3000/movies \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Nom du film",
+           "director": "Réalisateur",
+           "releaseDate": "2023-01-01T00:00:00.000Z",
+           "genre": "Action",
+           "rating": 8.5
+         }'
+```
+
+#### 4️⃣ **Importer plusieurs films**
+```sh
+curl -X POST http://localhost:3000/movies/import \
+     -H "Content-Type: application/json" \
+     -d '[
+           {
+             "title": "Film 1",
+             "director": "Réalisateur 1",
+             "releaseDate": "2023-01-01T00:00:00.000Z",
+             "genre": "Action",
+             "rating": 7.8
+           },
+           {
+             "title": "Film 2",
+             "director": "Réalisateur 2",
+             "releaseDate": "2023-02-01T00:00:00.000Z",
+             "genre": "Drame",
+             "rating": 8.9
+           }
+         ]'
+```
+
+#### 5️⃣ **Supprimer un film**
+```sh
+curl -X DELETE http://localhost:3000/movies/{id}
+```
+Remplacez `{id}` par l'ID du film à supprimer.
+
 
 ## 🚀 **Conclusion**
 Tu as maintenant :

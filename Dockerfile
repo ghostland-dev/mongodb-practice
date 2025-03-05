@@ -9,7 +9,7 @@ COPY ./* ./
  
 # Installer les dépendances
 RUN npm install
-
+ 
 # Compiler le TypeScript en JavaScript
 RUN npm run build
 
