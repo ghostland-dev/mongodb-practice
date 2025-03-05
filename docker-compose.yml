@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mongo-db:
     image: mongo:latest
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
     ports:

@@ -120,18 +120,18 @@ Voici les commandes `cURL` correspondantes pour les différentes routes de votre
 
 #### 1️⃣ **Obtenir tous les livres**
 ```sh
-curl -X GET http://localhost:3000/books
+curl -X GET http://localhost:3000/api/books
 ```
 
 #### 2️⃣ **Obtenir un livre par ID**
 ```sh
-curl -X GET http://localhost:3000/books/{id}
+curl -X GET http://localhost:3000/api/books/{id}
 ```
 Remplacez `{id}` par l'ID du livre recherché.
 
 #### 3️⃣ **Ajouter un livre**
 ```sh
-curl -X POST http://localhost:3000/books \
+curl -X POST http://localhost:3000/api/books \
      -H "Content-Type: application/json" \
      -d '{
            "title": "Nom du livre",
@@ -149,7 +149,7 @@ curl -X POST http://localhost:3000/books \
 
 #### 4️⃣ **Importer plusieurs livres**
 ```sh
-curl -X POST http://localhost:3000/books/import \
+curl -X POST http://localhost:3000/api/books/import \
      -H "Content-Type: application/json" \
      -d '[
            {
@@ -181,7 +181,7 @@ curl -X POST http://localhost:3000/books/import \
 
 #### 5️⃣ **Supprimer un livre**
 ```sh
-curl -X DELETE http://localhost:3000/books/{id}
+curl -X DELETE http://localhost:3000/api/books/{id}
 ```
 Remplacez `{id}` par l'ID du livre à supprimer.
 
@@ -191,18 +191,18 @@ Remplacez `{id}` par l'ID du livre à supprimer.
 
 #### 1️⃣ **Obtenir tous les films**
 ```sh
-curl -X GET http://localhost:3000/movies
+curl -X GET http://localhost:3000/api/movies
 ```
 
 #### 2️⃣ **Obtenir un film par ID**
 ```sh
-curl -X GET http://localhost:3000/movies/{id}
+curl -X GET http://localhost:3000/api/movies/{id}
 ```
 Remplacez `{id}` par l'ID du film recherché.
 
 #### 3️⃣ **Ajouter un film**
 ```sh
-curl -X POST http://localhost:3000/movies \
+curl -X POST http://localhost:3000/api/movies \
      -H "Content-Type: application/json" \
      -d '{
            "title": "Nom du film",
@@ -215,29 +215,84 @@ curl -X POST http://localhost:3000/movies \
 
 #### 4️⃣ **Importer plusieurs films**
 ```sh
-curl -X POST http://localhost:3000/movies/import \
+curl -X POST "http://localhost:3000/movies" \
      -H "Content-Type: application/json" \
      -d '[
-           {
-             "title": "Film 1",
-             "director": "Réalisateur 1",
-             "releaseDate": "2023-01-01T00:00:00.000Z",
-             "genre": "Action",
-             "rating": 7.8
-           },
-           {
-             "title": "Film 2",
-             "director": "Réalisateur 2",
-             "releaseDate": "2023-02-01T00:00:00.000Z",
-             "genre": "Drame",
-             "rating": 8.9
-           }
-         ]'
+  {
+    "title": "Inception",
+    "plot": "A thief who enters dreams to steal secrets.",
+    "fullplot": "A skilled thief is given a chance to erase his criminal past.",
+    "genres": ["Sci-Fi", "Thriller"],
+    "runtime": 148,
+    "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt"],
+    "num_mflix_comments": 10,
+    "countries": ["USA"],
+    "released": "2010-07-16T00:00:00Z",
+    "directors": ["Christopher Nolan"],
+    "rated": "PG-13",
+    "awards": {
+      "wins": 4,
+      "nominations": 8,
+      "text": "Won 4 Oscars. Another 8 wins & 8 nominations."
+    },
+    "lastupdated": "2023-03-01",
+    "year": 2010,
+    "imdb": {
+      "rating": 8.8,
+      "votes": 2000000,
+      "id": 1375666
+    },
+    "type": "movie",
+    "tomatoes": {
+      "viewer": {
+        "rating": 4.5,
+        "numReviews": 15000,
+        "meter": 92
+      },
+      "lastUpdated": "2023-03-01T00:00:00Z"
+    }
+  },
+  {
+    "title": "The Matrix",
+    "plot": "A hacker discovers the true nature of his reality.",
+    "fullplot": "A computer hacker learns about the true nature of his world.",
+    "genres": ["Action", "Sci-Fi"],
+    "runtime": 136,
+    "cast": ["Keanu Reeves", "Laurence Fishburne"],
+    "num_mflix_comments": 20,
+    "countries": ["USA"],
+    "released": "1999-03-31T00:00:00Z",
+    "directors": ["Lana Wachowski", "Lilly Wachowski"],
+    "rated": "R",
+    "awards": {
+      "wins": 4,
+      "nominations": 6,
+      "text": "Won 4 Oscars. Another 6 wins & 10 nominations."
+    },
+    "lastupdated": "2023-03-01",
+    "year": 1999,
+    "imdb": {
+      "rating": 8.7,
+      "votes": 1800000,
+      "id": 0133093
+    },
+    "type": "movie",
+    "tomatoes": {
+      "viewer": {
+        "rating": 4.7,
+        "numReviews": 13000,
+        "meter": 87
+      },
+      "lastUpdated": "2023-03-01T00:00:00Z"
+    }
+  }
+]'
+
 ```
 
 #### 5️⃣ **Supprimer un film**
 ```sh
-curl -X DELETE http://localhost:3000/movies/{id}
+curl -X DELETE http://localhost:3000/api/movies/{id}
 ```
 Remplacez `{id}` par l'ID du film à supprimer.
 
