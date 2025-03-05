@@ -10,6 +10,7 @@ COPY . .
 # Copier les fichiers package.json et package-lock.json
 COPY package.json package-lock.json ./
 
+RUN cd app
 # Installer les dépendances
 RUN npm install
 
