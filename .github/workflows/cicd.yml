@@ -37,6 +37,7 @@ jobs:
 
       - name: Installer les dépendances
         run: |
+            cp .env.example .env
             cd app 
             npm install
 
