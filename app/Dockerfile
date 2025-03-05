@@ -4,14 +4,14 @@ FROM node:22-alpine
 # Définir le répertoire de travail
 WORKDIR /app
 
+# Copier le reste des fichiers
+COPY . .
+
 # Copier les fichiers package.json et package-lock.json
 COPY package.json package-lock.json ./
 
 # Installer les dépendances
 RUN npm install
-
-# Copier le reste des fichiers
-COPY . .
 
 # Compiler le TypeScript en JavaScript
 RUN npm run build
