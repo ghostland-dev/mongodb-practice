@@ -5,12 +5,8 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Copier le reste des fichiers
-COPY . .
-
-# Copier les fichiers package.json et package-lock.json
-COPY package.json package-lock.json ./
-
-RUN cd app
+COPY ./* ./
+ 
 # Installer les dépendances
 RUN npm install
 

@@ -30,7 +30,7 @@ services:
         hard: 64000
 
   app:
-    build: ./app
+    build: .
     restart: unless-stopped
     env_file:
       - .env
